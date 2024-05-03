@@ -80,7 +80,7 @@ public class TotalTest {
 		if(findMember.isPresent()) {
 			Team findTeam = findMember.get().getTeam();
 			Optional<Vote> findVote = findTeam.getVotes().stream().filter(fv -> fv.getCreator().equals(findMember.get().getName()) && fv.getTitle().equals("title")).findFirst();
-			// 각 투표에 관한 내용들 확인하기
+			// 해당 투표에 관한 내용들 확인하기
 			log.info("해당 투표는 {} 팀에서 진행하고 있습니다.", findTeam.getTeamName());
 			log.info("투표 제목 : {}", findVote.get().getTitle());
 			log.info("투표 내용 : {}", findVote.get().getContent());

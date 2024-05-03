@@ -98,12 +98,10 @@ public class Member {
 	}
 	
 	public VoteResponse responseToVote(Vote vote, boolean isUpVote) {
+		Assert.isTrue(vote.getEndDate().isBefore(LocalDate.now()), "종료 된 투표에는 참여 할 수 없습니다.");
 		Assert.notNull(vote, "해당 투표는 존재하지 않습니다.");
-		
 		boolean checkVote = this.voteResponses.stream().anyMatch(vr -> vr.getVote().getId().equals(vote.getId()));
-		
 		Assert.isTrue(!checkVote, "이미 이 투표에 응답했습니다.");
-		
 		VoteResponse voteResponse = VoteResponse.builder().vote(vote).member(this).isUpVote(isUpVote).build();
 		
 		return voteResponse;
