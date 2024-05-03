@@ -33,13 +33,13 @@ public class VoteResponse {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
-	private boolean isUpVote;
+	private Boolean upVote;
 
 	@Builder
 	public VoteResponse(Vote vote, Member member, boolean isUpVote) {
 		this.vote = vote;
 		this.member = member;
-		this.isUpVote = isUpVote;
+		this.upVote = isUpVote;
 	}
 	
     @Override
@@ -55,15 +55,13 @@ public class VoteResponse {
         return Objects.hash(id);
     }
 	
-    public void addToMember() {
+    public void addToMemberAndTeam() {
         if (!member.getVoteResponses().contains(this)) {
             member.getVoteResponses().add(this);
         }
-    }
-    
-    public void addToVote() {
         if (!vote.getVoteResponses().contains(this)) {
-            vote.getVoteResponses().add(this);
+        	vote.getVoteResponses().add(this);
         }
     }
+    
 }

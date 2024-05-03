@@ -93,14 +93,14 @@ public class Member {
 		Assert.hasText(title, "제목은 필수 사항입니다.");
 		Assert.hasText(content, "내용은 필수 사항입니다.");
 		Assert.notNull(endDate, "투표 만료 시간은 필수 사항입니다.");
-		
-		return Vote.builder().creator(this.name).title(title).content(content).endDate(endDate).build();
+		Vote newVote = Vote.builder().creator(this.name).title(title).content(content).endDate(endDate).build();
+		return newVote;
 	}
 	
 	public VoteResponse responseToVote(Vote vote, boolean isUpVote) {
 		Assert.notNull(vote, "해당 투표는 존재하지 않습니다.");
 		
-		boolean checkVote = voteResponses.stream().anyMatch(vr -> vr.getVote().getId().equals(vote.getId()));
+		boolean checkVote = this.voteResponses.stream().anyMatch(vr -> vr.getVote().getId().equals(vote.getId()));
 		
 		Assert.isTrue(!checkVote, "이미 이 투표에 응답했습니다.");
 		

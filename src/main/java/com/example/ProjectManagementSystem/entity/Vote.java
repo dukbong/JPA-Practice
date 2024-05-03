@@ -3,6 +3,7 @@ package com.example.ProjectManagementSystem.entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -53,4 +54,19 @@ public class Vote {
 		this.endDate = endDate;
 	}
 	
+	public List<Member> checkVote(){
+		List<Member> checkMember = new ArrayList<>();
+		for(VoteResponse voteResponse : voteResponses) {
+			checkMember.add(voteResponse.getMember());
+		}
+		return checkMember;
+	}
+	
+	public int isUpVote() {
+		return this.voteResponses.stream().filter(vr -> vr.getUpVote() == true).collect(Collectors.toList()).size();
+	}
+	
+	public int isDownVote() {
+		return this.voteResponses.stream().filter(vr -> vr.getUpVote() == false).collect(Collectors.toList()).size();
+	}
 }

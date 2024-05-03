@@ -36,6 +36,9 @@ public class Team {
 
 	@OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
 	private List<Member> members = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+	private List<Vote> votes = new ArrayList<>();
 
 	@Builder
 	public Team(Long id, String teamName, String leader) {
@@ -51,11 +54,19 @@ public class Team {
 	private boolean containCheck(Member member) {
 		return this.members.stream().anyMatch(m -> m.getId().equals(member.getId()));
 	}
+	private boolean containCheck(Vote vote) {
+		return this.votes.stream().anyMatch(v -> v.getId().equals(vote.getId()));
+	}
 
 	public void addMember(Member member) {
 		Assert.isTrue(!containCheck(member), "해당 멤버는 이미 팀의 구성원 입니다.");
 		this.members.add(member);
 		member.joinTeam(this);
+	}
+	
+	public void addVote(Vote vote) {
+		Assert.isTrue(!containCheck(vote), "해당 멤버는 이미 팀의 구성원 입니다.");
+		this.votes.add(vote);
 	}
 
 	public void removeMember(Member member) {
